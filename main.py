@@ -21,7 +21,7 @@ def bubble_sort(array, mode='1'):
     if mode == '1':
         for i in range(len(array) - 1, 0, -1):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Пузырек доступ получил")
             print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
@@ -31,15 +31,15 @@ def bubble_sort(array, mode='1'):
             if no_swap:
                 print(array)
                 semaphore.release()
-                print("Доступ освобожден")
+                print("Пузырек доступ освободил")
                 return
             print(array)
             semaphore.release()
-            print("Доступ освобожден")
+            print("Пузырек доступ освободил")
     elif mode == '2':
         for i in range(len(array) - 1, 0, -1):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Пузырек доступ получил")
             print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
@@ -48,15 +48,17 @@ def bubble_sort(array, mode='1'):
                     no_swap = False
             if no_swap:
                 print(array)
+                semaphore.release()
+                print("Пузырек доступ освободил")
                 return
             print(array)
             semaphore.release()
-            print("Доступ освобожден")
+            print("Пузырек доступ освободил")
 def insertion_sort(array, mode='1'):
     if mode == '1':
         for i in range(1, len(array)):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Вставка доступ получил")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
@@ -66,11 +68,11 @@ def insertion_sort(array, mode='1'):
             array[j + 1] = temp
             print(array)
             semaphore.release()
-            print("Доступ освобожден")
+            print("Вставка доступ освободила")
     elif mode == '2':
         for i in range(1, len(array)):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Вставка доступ получил")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
@@ -80,12 +82,12 @@ def insertion_sort(array, mode='1'):
             array[j + 1] = temp
             print(array)
             semaphore.release()
-            print("Доступ освобожден")        
+            print("Вставка доступ освободила")        
 def selection_sort(array, mode='1'):
     if mode == '1':
         for i in range(0, len(array) - 1):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Выбор доступ получил")
             print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
@@ -94,11 +96,11 @@ def selection_sort(array, mode='1'):
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
             semaphore.release()
-            print("Доступ освобожден")
+            print("Выбор доступ освободил")
     elif mode == '2':    
         for i in range(0, len(array) - 1):
             semaphore.acquire()
-            print("Доступ получен")
+            print("Выбор доступ получил")
             print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
@@ -107,7 +109,7 @@ def selection_sort(array, mode='1'):
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
             semaphore.release()
-            print("Доступ освобожден")
+            print("Выбор доступ освободил")
 
 
 
