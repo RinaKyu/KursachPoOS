@@ -20,64 +20,72 @@ def array_gen(len_array: int, type) -> list:
 def bubble_sort(array, mode='1'):
     if mode == '1':
         for i in range(len(array) - 1, 0, -1):
+            print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
                 if array[j + 1] < array[j]:
                     array[j], array[j + 1] = array[j + 1], array[j]
                     no_swap = False
             if no_swap:
+                print(array)
                 return
-            print('bubble:', array)
+            print(array)
     elif mode == '2':
         for i in range(len(array) - 1, 0, -1):
+            print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
                 if array[j + 1] > array[j]:
                     array[j], array[j + 1] = array[j + 1], array[j]
                     no_swap = False
             if no_swap:
+                print(array)
                 return
-            print('bubble:', array)
+            print(array)
 def insertion_sort(array, mode='1'):
     if mode == '1':
         for i in range(1, len(array)):
+            print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
             while (j >= 0 and temp < array[j]):
                 array[j + 1] = array[j]
                 j = j - 1
             array[j + 1] = temp
-            print('insertion_sort:', array)
+            print(array)
     elif mode == '2':
         for i in range(1, len(array)):
+            print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
             while (j >= 0 and temp > array[j]):
                 array[j + 1] = array[j]
                 j = j - 1
             array[j + 1] = temp
-            print('insertion_sort:', array)        
+            print(array)        
 def selection_sort(array, mode='1'):
     if mode == '1':
         for i in range(0, len(array) - 1):
+            print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
                 if array[j] < array[smallest]:
                     smallest = j
             array[i], array[smallest] = array[smallest], array[i]
-            print('selection_sort:', array)
+            print(array)
     elif mode == '2':    
         for i in range(0, len(array) - 1):
+            print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
                 if array[j] > array[smallest]:
                     smallest = j
             array[i], array[smallest] = array[smallest], array[i]
-            print('selection_sort:', array)
+            print(array)
 
 if __name__ == '__main__':
     a = 'threads'
-    # a = 'processes'
+    a = 'processes'
     array = array_gen(int(input('Введите длинну массива: ')), input('Введите тип данных массива(i - int, f - float, s - str): '))
     mode = input('Введите режим сортировки(1 по возр, 2 по убыв): ')
     print('array:',array)
