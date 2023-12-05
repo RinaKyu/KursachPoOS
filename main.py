@@ -1,6 +1,6 @@
 import random
 from threading import Thread, Semaphore
-# from multiprocessing import Process
+
 semaphore = Semaphore(1)
 
 def array_gen(len_array: int, type) -> list:
@@ -15,22 +15,13 @@ def array_gen(len_array: int, type) -> list:
         return 'error type'
     return array
 
-def access_resource(func_of_sort, array, mode):
-    semaphore.acquire()  # Запрашиваем доступ к ресурсу
-    try:
-        # Код для доступа к ресурсу
-        print("Доступ получен")
-
-        func_of_sort(array, mode)
-        # Имитация использования ресурса
-        print("Доступ освобожден")
-    finally:
-        semaphore.release()
 
 
 def bubble_sort(array, mode='1'):
     if mode == '1':
         for i in range(len(array) - 1, 0, -1):
+            semaphore.acquire()
+            print("Доступ получен")
             print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
@@ -39,10 +30,16 @@ def bubble_sort(array, mode='1'):
                     no_swap = False
             if no_swap:
                 print(array)
+                semaphore.release()
+                print("Доступ освобожден")
                 return
             print(array)
+            semaphore.release()
+            print("Доступ освобожден")
     elif mode == '2':
         for i in range(len(array) - 1, 0, -1):
+            semaphore.acquire()
+            print("Доступ получен")
             print('bubble:', array, end=' -> ')
             no_swap = True
             for j in range(0, i):
@@ -53,9 +50,13 @@ def bubble_sort(array, mode='1'):
                 print(array)
                 return
             print(array)
+            semaphore.release()
+            print("Доступ освобожден")
 def insertion_sort(array, mode='1'):
     if mode == '1':
         for i in range(1, len(array)):
+            semaphore.acquire()
+            print("Доступ получен")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
@@ -64,8 +65,12 @@ def insertion_sort(array, mode='1'):
                 j = j - 1
             array[j + 1] = temp
             print(array)
+            semaphore.release()
+            print("Доступ освобожден")
     elif mode == '2':
         for i in range(1, len(array)):
+            semaphore.acquire()
+            print("Доступ получен")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
             j = i - 1
@@ -73,10 +78,14 @@ def insertion_sort(array, mode='1'):
                 array[j + 1] = array[j]
                 j = j - 1
             array[j + 1] = temp
-            print(array)        
+            print(array)
+            semaphore.release()
+            print("Доступ освобожден")        
 def selection_sort(array, mode='1'):
     if mode == '1':
         for i in range(0, len(array) - 1):
+            semaphore.acquire()
+            print("Доступ получен")
             print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
@@ -84,8 +93,12 @@ def selection_sort(array, mode='1'):
                     smallest = j
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
+            semaphore.release()
+            print("Доступ освобожден")
     elif mode == '2':    
         for i in range(0, len(array) - 1):
+            semaphore.acquire()
+            print("Доступ получен")
             print('selection_sort:', array, end=' -> ')
             smallest = i
             for j in range(i + 1, len(array)):
@@ -93,25 +106,21 @@ def selection_sort(array, mode='1'):
                     smallest = j
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
+            semaphore.release()
+            print("Доступ освобожден")
 
 
 
 
 
 if __name__ == '__main__':
-    a = 'threads'
-    # a = 'processes'
     array = array_gen(int(input('Введите длинну массива: ')), input('Введите тип данных массива(i - int, f - float, s - str): '))
     mode = input('Введите режим сортировки(1 по возр, 2 по убыв): ')
     print('array:',array)
-    if a == 'threads':
-        thread1 = Thread(target=access_resource, args=(bubble_sort,array, mode))
-        thread2 = Thread(target=access_resource, args=(insertion_sort,array,mode))
-        thread3 = Thread(target=access_resource, args=(selection_sort,array, mode))
-    # elif a == 'processes':
-    #     thread1 = Process(target=bubble_sort, args=(array, mode))
-    #     thread2 = Process(target=insertion_sort, args=(array, mode))
-    #     thread3 = Process(target=selection_sort, args=(array, mode))
+    thread1 = Thread(target=bubble_sort, args=(array, mode))
+    thread2 = Thread(target=insertion_sort, args=(array,mode))
+    thread3 = Thread(target=selection_sort, args=(array, mode))
+    
     # Запускаем потоки
     thread1.start()
     thread2.start()
