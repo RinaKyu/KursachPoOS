@@ -20,7 +20,6 @@ def array_gen(len_array: int, type) -> list:
 def bubble_sort(array, mode='1'):
     if mode == '1':
         for i in range(len(array) - 1, 0, -1):
-
             semaphore.acquire()
             print("Пузырек доступ получил")
             print('bubble:', array, end=' -> ')
