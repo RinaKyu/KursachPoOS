@@ -36,13 +36,13 @@ def bubble_sort(array, mode='1'):
                 print(array)
                 print("Поток1 доступ освободил")
                 semaphore.release()
-                sleep(0.5)
+                sleep(sorting_delay)
                 return
             print(array)
 
             print("Поток1 доступ освободил")
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
             
     elif mode == '2':
         for i in range(len(array) - 1, 0, -1):
@@ -58,12 +58,12 @@ def bubble_sort(array, mode='1'):
                 print(array)
                 print("Поток1 доступ освободил")
                 semaphore.release()
-                sleep(0.5)
+                sleep(sorting_delay)
                 return
             print(array)
             print("Поток1 доступ освободил")
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
 def insertion_sort(array, mode='1'):
     if mode == '1':
         for i in range(1, len(array)):
@@ -79,7 +79,7 @@ def insertion_sort(array, mode='1'):
             print(array)
             print("Поток2 доступ освободил")
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
             
     elif mode == '2':
         for i in range(1, len(array)):
@@ -95,7 +95,7 @@ def insertion_sort(array, mode='1'):
             print(array)
             print("Поток2 доступ освободил")  
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
                   
 def selection_sort(array, mode='1'):
     if mode == '1':
@@ -111,7 +111,7 @@ def selection_sort(array, mode='1'):
             print(array)
             print("Поток3 доступ освободил")
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
             
     elif mode == '2':    
         for i in range(0, len(array) - 1):
@@ -126,12 +126,13 @@ def selection_sort(array, mode='1'):
             print(array)
             print("Поток3 доступ освободил")
             semaphore.release()
-            sleep(0.5)
+            sleep(sorting_delay)
 
 
 if __name__ == '__main__':
     array = array_gen(int(input('Введите длинну массива: ')), input('Введите тип данных массива(i - int, f - float, s - str): '))
     mode = input('Введите режим сортировки(1 по возр, 2 по убыв): ')
+    sorting_delay = float(input('Введите время задержки каждой сортировки после действия в секундах:'))
     print('array:',array)
     thread1 = Thread(target=bubble_sort, args=(array, mode))
     thread2 = Thread(target=insertion_sort, args=(array,mode))
