@@ -1,9 +1,8 @@
 import random
-from threading import Thread, Semaphore
+from threading import Thread, Lock
 from time import sleep
 
-semaphore = Semaphore(1)
-
+mutex = Lock()
 def array_gen(len_array: int, type) -> list:
     symbols = [i for i in 'abcdefghijklmnopqrstuvwxyz']
     if type == 's':
@@ -22,7 +21,7 @@ def bubble_sort(array, mode='1'):
     if mode == '1':
         for i in range(len(array) - 1, 0, -1):
             
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток1 доступ получил")
 
             print('bubble:', array, end=' -> ')
@@ -35,18 +34,18 @@ def bubble_sort(array, mode='1'):
 
                 print(array)
                 print("Поток1 доступ освободил")
-                semaphore.release()
+                mutex.release()
                 sleep(sorting_delay)
                 return
             print(array)
 
             print("Поток1 доступ освободил")
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
             
     elif mode == '2':
         for i in range(len(array) - 1, 0, -1):
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток1 доступ получил")
             print('bubble:', array, end=' -> ')
             no_swap = True
@@ -57,17 +56,17 @@ def bubble_sort(array, mode='1'):
             if no_swap:
                 print(array)
                 print("Поток1 доступ освободил")
-                semaphore.release()
+                mutex.release()
                 sleep(sorting_delay)
                 return
             print(array)
             print("Поток1 доступ освободил")
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
 def insertion_sort(array, mode='1'):
     if mode == '1':
         for i in range(1, len(array)):
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток2 доступ получил")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
@@ -78,12 +77,12 @@ def insertion_sort(array, mode='1'):
             array[j + 1] = temp
             print(array)
             print("Поток2 доступ освободил")
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
             
     elif mode == '2':
         for i in range(1, len(array)):
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток2 доступ получил")
             print('insertion_sort:', array, end=' -> ')
             temp = array[i]
@@ -94,13 +93,13 @@ def insertion_sort(array, mode='1'):
             array[j + 1] = temp
             print(array)
             print("Поток2 доступ освободил")  
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
                   
 def selection_sort(array, mode='1'):
     if mode == '1':
         for i in range(0, len(array) - 1):
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток3 доступ получил")
             print('selection_sort:', array, end=' -> ')
             smallest = i
@@ -110,12 +109,12 @@ def selection_sort(array, mode='1'):
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
             print("Поток3 доступ освободил")
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
             
     elif mode == '2':    
         for i in range(0, len(array) - 1):
-            semaphore.acquire()
+            mutex.acquire()
             print("Поток3 доступ получил")
             print('selection_sort:', array, end=' -> ')
             smallest = i
@@ -125,7 +124,7 @@ def selection_sort(array, mode='1'):
             array[i], array[smallest] = array[smallest], array[i]
             print(array)
             print("Поток3 доступ освободил")
-            semaphore.release()
+            mutex.release()
             sleep(sorting_delay)
 
 
